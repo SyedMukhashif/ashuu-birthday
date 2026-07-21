@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Ashuu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f7dee2;
+    --blush-deep: #f0c4cd;
+    --rose: #d98a9b;
+    --wine: #6e2b3a;
+    --wine-deep: #4a1c27;
+    --cream: #fff9f6;
+    --gold: #c9a15c;
+    --ink: #3a2428;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  body.locked { overflow: hidden; height: 100vh; }
+
+  /* ---------- PASSWORD GATE ---------- */
+  .gate {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--wine-deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 2rem;
+    text-align: center;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+  .gate.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+  .gate-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    width: 66px; height: 66px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gate-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--blush);
+    opacity: 0.9;
+  }
+  .gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: min(85vw, 300px);
+  }
+  .gate-input-wrap {
+    position: relative;
+    width: 100%;
+  }
+  .gate-input {
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    padding: 0.85rem 2.8rem 0.85rem 1.1rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--rose);
+    background: rgba(255,255,255,0.06);
+    color: var(--blush);
+    text-align: center;
+    outline: none;
+    width: 100%;
+  }
+  .gate-input::placeholder { color: rgba(247,222,226,0.5); }
+  .gate-input:focus { border-color: var(--gold); }
+  .gate-eye {
+    position: absolute;
+    right: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--blush);
+    opacity: 0.6;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem;
+    transition: opacity 0.2s ease;
+  }
+  .gate-eye:hover { opacity: 1; }
+  .gate-btn {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    padding: 0.85rem 1.1rem;
+    border-radius: 999px;
+    border: 2px solid var(--gold);
+    background: var(--gold);
+    color: var(--wine-deep);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .gate-btn:hover { transform: translateY(-2px); }
+  .gate-error {
+    font-size: 0.8rem;
+    color: var(--rose);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .gate-error.show { opacity: 1; }
+  .gate.shake { animation: gateShake 0.4s ease; }
+  @keyframes gateShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
+
+  section {
+    padding: 6rem 1.5rem;
+    position: relative;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 50% 15%, var(--blush-deep) 0%, transparent 60%),
+      linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
+    padding: 2rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .hero-photo {
+    width: min(78vw, 320px);
+    aspect-ratio: 3/4;
+    border-radius: 8px;
+    border: 2px dashed var(--rose);
+    background: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rose);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 2.2rem;
+    box-shadow: 0 20px 50px -20px rgba(110, 43, 58, 0.35);
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero-photo:has(img) {
+    border-style: solid;
+    padding: 0;
+  }
+
+  .eyebrow {
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    color: var(--wine);
+    opacity: 0.75;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 11vw, 5.2rem);
+    font-weight: 600;
+    color: var(--wine-deep);
+    line-height: 1.05;
+  }
+
+  .hero h1 span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: letterIn 0.8s ease forwards;
+  }
+
+  @keyframes letterIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero .sub {
+    margin-top: 1.1rem;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--wine);
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.6s;
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 34px;
+    border: 2px solid var(--wine);
+    border-radius: 20px;
+    opacity: 0.6;
+  }
+  .scroll-cue::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 4px;
+    height: 8px;
+    background: var(--wine);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    animation: scrollDot 1.6s ease infinite;
+  }
+  @keyframes scrollDot {
+    0% { top: 6px; opacity: 1; }
+    70% { opacity: 0; }
+    100% { top: 18px; opacity: 0; }
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+  .section-head .eyebrow { color: var(--rose); }
+  .section-head h2 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: var(--wine-deep);
+    font-weight: 500;
+  }
+  .section-head p {
+    margin-top: 0.6rem;
+    color: var(--ink);
+    opacity: 0.65;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- PLACEHOLDER BOX (generic) ---------- */
+  .ph {
+    border: 2px dashed var(--rose);
+    background: rgba(217, 138, 155, 0.06);
+    color: var(--wine);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    border-radius: 10px;
+    padding: 1rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .ph img, .ph video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+  }
+  .ph:has(img), .ph:has(video) {
+    border-style: solid;
+    padding: 0;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery {
+    background: var(--cream);
+  }
+  .gallery-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .gallery-item { display: flex; flex-direction: column; gap: 0.5rem; }
+  .gallery-item .ph { aspect-ratio: 4/5; }
+  .gallery-item .cap {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: var(--wine);
+    text-align: center;
+    opacity: 0.8;
+  }
+  @media (min-width: 640px) {
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ---------- VIDEO / REELS ---------- */
+  .reels {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--blush) 100%);
+  }
+  .reel-row {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .reel-row .ph { aspect-ratio: 9/16; font-size: 0.75rem; }
+  @media (min-width: 640px) {
+    .reel-row { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ---------- THE NOTE (signature moment: sealed letter) ---------- */
+  .note-wrap {
+    background: var(--wine-deep);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100svh;
+    padding: 4rem 1.5rem;
+  }
+  .envelope {
+    width: min(90vw, 480px);
+    cursor: pointer;
+    position: relative;
+    perspective: 1600px;
+  }
+  .envelope-face {
+    background: linear-gradient(135deg, #efc9d2, #e3a9b6);
+    border-radius: 4px;
+    aspect-ratio: 3/2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    text-align: center;
+  }
+  .envelope-face .seal {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--wine);
+    color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+  }
+  .envelope-face .tap-hint {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--wine-deep);
+    opacity: 0.7;
+  }
+  .envelope.open .envelope-face {
+    transform: scale(0.9) translateY(-30px) rotateX(25deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .letter-paper {
+    position: absolute;
+    inset: 0;
+    background: #fffdf8;
+    background-image: repeating-linear-gradient(#fffdf8 0px, #fffdf8 34px, #f1e6d8 35px);
+    border-radius: 4px;
+    padding: 2.4rem 2rem;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  .envelope.open .letter-paper {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .letter-paper .heart {
+    font-size: 1.4rem;
+    display: inline-block;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+  }
+  .letter-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    line-height: 1.75;
+    color: #4a2e1c;
+  }
+  .letter-text .placeholder-note {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    color: var(--rose);
+    border: 1.5px dashed var(--rose);
+    border-radius: 8px;
+    padding: 1rem;
+    display: block;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline {
+    max-width: 620px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 1.6rem;
+    border-left: 2px solid var(--rose);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.68rem;
+    top: 0.2rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--wine);
+    box-shadow: 0 0 0 4px var(--blush);
+  }
+  .tl-item .date {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--rose);
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  .tl-item h3 {
+    color: var(--wine-deep);
+    font-size: 1.4rem;
+    margin-bottom: 0.6rem;
+  }
+  .tl-item .ph { height: 230px; margin-top: 0.6rem; }
+
+  /* ---------- CLOSING ---------- */
+  .closing {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 100%, var(--blush-deep), var(--cream));
+    position: relative;
+    overflow: hidden;
+  }
+  .closing h2 {
+    font-size: clamp(2.4rem, 9vw, 4rem);
+    color: var(--wine-deep);
+    font-weight: 600;
+  }
+  .closing .ph { width: min(70vw, 300px); aspect-ratio: 1/1; margin: 2rem auto 1rem; border-radius: 50%; }
+  .confetti {
+    position: absolute;
+    top: -10%;
+    border-radius: 2px;
+    opacity: 0.9;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    to { transform: translateY(115vh) rotate(360deg); }
+  }
+
+  /* ---------- FINAL INTERACTIVE MOMENT ---------- */
+  .finale {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--wine-deep);
+    color: var(--blush);
+    padding: 3rem 1.5rem;
+  }
+  .finale h2 {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+    font-weight: 500;
+    max-width: 480px;
+    margin-bottom: 2.2rem;
+  }
+  .finale .btn-row { display: flex; gap: 1.2rem; }
+  .finale button {
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    padding: 0.9rem 2.2rem;
+    border-radius: 999px;
+    border: 2px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  }
+  .finale button:hover { transform: translateY(-2px); }
+  .finale button.primary { background: var(--gold); color: var(--wine-deep); }
+  .finale .reaction {
+    margin-top: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    min-height: 2rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .finale .reaction.show { opacity: 1; }
+  .finale .heart-burst {
+    display: inline-block;
+    animation: burst 0.6s ease;
+  }
+  @keyframes burst {
+    0% { transform: scale(0.5); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  footer {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: var(--wine-deep);
+    color: var(--blush);
+    opacity: 0.7;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------- INTRO LOADER ---------- */
+  .loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: var(--wine-deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .loader.hide { opacity: 0; visibility: hidden; }
+  .loader-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    color: var(--gold);
+    width: 74px; height: 74px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    animation: markPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes markPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(201,161,92,0.3); }
+    50% { transform: scale(1.06); box-shadow: 0 0 0 10px rgba(201,161,92,0); }
+  }
+  .loader-text {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush);
+    opacity: 0.75;
+  }
+  .dots span { animation: dotBlink 1.4s infinite; opacity: 0; }
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotBlink {
+    0%, 100% { opacity: 0; } 50% { opacity: 1; }
+  }
+
+  /* ---------- SCROLL PROGRESS ---------- */
+  .progress-track {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(110,43,58,0.08);
+    z-index: 500;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+    transition: width 0.1s linear;
+  }
+
+  /* ---------- AMBIENT PETALS ---------- */
+  .petals {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    top: -5%;
+    border-radius: 60% 0 60% 0;
+    background: var(--rose);
+    opacity: 0.35;
+    animation: drift linear infinite, sway ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    to { transform: translateY(110vh); }
+  }
+  @keyframes sway {
+    from { margin-left: -30px; }
+    to { margin-left: 30px; }
+  }
+
+  /* ---------- TILT (gallery) ---------- */
+  @media (pointer: fine) {
+    .gallery-item .ph { transition: transform 0.15s ease-out, box-shadow 0.15s ease-out; transform-style: preserve-3d; will-change: transform; }
+    .gallery-item .ph:hover { box-shadow: 0 20px 40px -18px rgba(110,43,58,0.4); }
+  }
+
+  /* ---------- MAGNETIC BUTTONS ---------- */
+  .finale button { will-change: transform; }
+
+  /* hero, gallery, reels, closing sit above petal layer */
+  .hero, .gallery, .reels, .note-wrap, section, footer { position: relative; z-index: 2; }
+</style>
+</head>
+<body>
+
+  <!-- PASSWORD GATE -->
+  <div class="gate" id="gate">
+    <div class="gate-mark">A</div>
+    <div class="gate-title">This is just for you</div>
+    <form class="gate-form" id="gateForm" autocomplete="off">
+      <div class="gate-input-wrap">
+        <input type="password" id="gateInput" class="gate-input" placeholder="Enter password" />
+        <button type="button" class="gate-eye" id="gateEye" aria-label="Show password">
+          <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <button type="submit" class="gate-btn">Open</button>
+    </form>
+    <div class="gate-error" id="gateError">that's not it, try again</div>
+  </div>
+
+  <!-- INTRO LOADER -->
+  <div class="loader" id="loader">
+    <div class="loader-mark">A</div>
+    <div class="loader-text">opening something for you<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+  </div>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- AMBIENT PETALS -->
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow reveal visible">22 July</div>
+    <div class="hero-photo"><img src="images/1.jpeg" alt="Ashuu"></div>
+    <h1 id="hero-title"></h1>
+    <div class="sub">for Ayesha — my Ashuu</div>
+    <div class="scroll-cue"></div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <div class="section-head reveal">
+      <div class="eyebrow">Memories</div>
+      <h2>Us, in pictures</h2>
+      <p>Every one of these means something.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <div class="ph"><img src="images/7.jpeg" alt="Demo photo 2"></div>
+        <div class="cap">your caption here</div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="ph"><img src="images/8.jpeg" alt="Demo photo 3"></div>
+        <div class="cap">your caption here</div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="ph"><img src="images/9.jpeg" alt="Demo photo 4"></div>
+        <div class="cap">your caption here</div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="ph"><img src="images/2.jpeg" alt="Demo photo 5"></div>
+        <div class="cap">your caption here</div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="ph"><img src="images/6.jpeg" alt="Demo photo 6"></div>
+        <div class="cap">your caption here</div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="ph"><img src="images/10.jpeg" alt="Demo photo 7"></div>
+        <div class="cap">your Muppi, always</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO / REELS -->
+  <section class="reels">
+    <div class="section-head reveal">
+      <div class="eyebrow">Little Moments</div>
+      <h2>Reels & clips</h2>
+      <p>Replace these boxes with your video embeds or files.</p>
+    </div>
+    <div class="reel-row">
+      <div class="ph reveal"><video controls src="images/vid 1.mp4" alt="Demo clip 1"> </video></div>
+      <div class="ph reveal"><video controls  src="images/vid 3.mp4" alt="Demo clip 2"></div>
+      <div class="ph reveal"><video controls  src="images/vid 2.mp4" alt="Demo clip 3"></div>
+    </div>
+  </section>
+
+  <!-- THE NOTE -->
+  <section class="note-wrap">
+    <div class="envelope reveal" id="envelope" onclick="openLetter()">
+      <div class="envelope-face">
+        <div class="seal">A</div>
+        <div class="tap-hint">Tap to open</div>
+      </div>
+      <div class="letter-paper">
+        <span class="heart">💌</span>
+        <p class="letter-text" style="margin-top:0.6rem;">
+          My Ashuu,
+          <br><br>
+          <span class="placeholder-note">
+            Happy birthday my Coco 😚 Allah apko hamesha khush rakhy, hamesha aise hi hasti muskurati rahein, kyunki jab aap hasti hain naw, meri poori duniya theek lagti hai. You have no idea how lucky I feel that you're mine. You're the most beautiful, sexiest, most loving person I've ever known, aur sabse zyada important — you're my favorite person to just exist with. I love you sab se zyada, my Ashuu. 
+
+<br>Always your Muppi. 🤍
+          </span>
+          <br><br>
+          — your Muppi
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="section-head reveal">
+      <div class="eyebrow">Our Story</div>
+      <h2>How we got here</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="date">the beginning</div>
+        <h3>When we first met</h3>
+        <div class="ph"><img src="images/11.jpeg" alt="Demo photo — first meeting"></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="date">soon after</div>
+        <h3>Our first date</h3>
+        <div class="ph"><img src="images/12.jpeg" alt="Demo photo — first date"></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="date">the moment</div>
+        <h3>That Kiss in the car</h3>
+        <div class="ph"><img src="images/13.jpeg" alt="Demo photo — that night"></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="date">now</div>
+        <h3>Us, today</h3>
+        <div class="ph"><img src="images/14.jpeg" alt="Demo photo — us today"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing" id="closing">
+    <div class="reveal">
+      <h2>Happy Birthday,<br>Ashuu 🩷</h2>
+      <div class="ph"><img src="images/15.jpeg" alt="Demo photo — couple"></div>
+      <p class="serif" style="font-style:italic; font-size:1.2rem; color:var(--wine-deep);">I love you, today and always.</p>
+    </div>
+  </section>
+
+  <!-- FINALE -->
+  <section class="finale">
+    <h2 class="reveal">Ye sab fake tw ni lag rha? 👀</h2>
+    <div class="btn-row reveal">
+      <button class="primary" onclick="react('no')">No</button>
+      <button onclick="react('yes')">Yes</button>
+    </div>
+    <div class="reaction" id="reaction"></div>
+  </section>
+
+  <footer>Made with love, just for your Ashuu · July 22</footer>
+
+  <script>
+    // Password gate
+    const GATE_PASSWORD = 'Ashuu-Birthday';
+    const GATE_STORAGE_KEY = 'ashuu_birthday_unlocked';
+    const gate = document.getElementById('gate');
+    const gateForm = document.getElementById('gateForm');
+    const gateInput = document.getElementById('gateInput');
+    const gateError = document.getElementById('gateError');
+    const gateEye = document.getElementById('gateEye');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const loader = document.getElementById('loader');
+    let pageUnlocked = false;
+
+    // Check if this device already unlocked it before
+    let alreadyUnlocked = false;
+    try {
+      alreadyUnlocked = localStorage.getItem(GATE_STORAGE_KEY) === 'true';
+    } catch (e) {
+      alreadyUnlocked = false; // storage unavailable (e.g. sandboxed preview) — just ask again
+    }
+
+    if (alreadyUnlocked) {
+      gate.classList.add('hide');
+      document.body.classList.remove('locked');
+      pageUnlocked = true;
+    } else {
+      document.body.classList.add('locked');
+    }
+
+    const EYE_OPEN = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"></path><circle cx="12" cy="12" r="3"></circle>';
+    const EYE_CLOSED = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a19.4 19.4 0 0 1 4.22-5.06M9.9 4.24A10.94 10.94 0 0 1 12 5c7 0 11 7 11 7a19.5 19.5 0 0 1-2.16 3.19"></path><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+
+    gateEye.addEventListener('click', () => {
+      const showing = gateInput.type === 'text';
+      gateInput.type = showing ? 'password' : 'text';
+      eyeIcon.innerHTML = showing ? EYE_OPEN : EYE_CLOSED;
+      gateEye.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+    });
+
+    gateForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (gateInput.value === GATE_PASSWORD) {
+        gate.classList.add('hide');
+        document.body.classList.remove('locked');
+        pageUnlocked = true;
+        try { localStorage.setItem(GATE_STORAGE_KEY, 'true'); } catch (e) { /* storage unavailable, ignore */ }
+        setTimeout(() => loader.classList.add('hide'), 900);
+      } else {
+        gateError.classList.add('show');
+        gate.classList.add('shake');
+        setTimeout(() => gate.classList.remove('shake'), 400);
+        gateInput.value = '';
+        gateInput.focus();
+      }
+    });
+
+    // Intro loader only runs after unlocking (see gateForm submit above)
+    window.addEventListener('load', () => {
+      if (pageUnlocked) {
+        setTimeout(() => loader.classList.add('hide'), 900);
+      }
+    });
+
+    // Scroll progress bar
+    const progressBar = document.getElementById('progressBar');
+    function updateProgress() {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      progressBar.style.width = scrolled + '%';
+    }
+    document.addEventListener('scroll', updateProgress, { passive: true });
+
+    // Ambient floating petals
+    const petalLayer = document.getElementById('petals');
+    const petalCount = window.innerWidth < 640 ? 10 : 18;
+    for (let i = 0; i < petalCount; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 6 + Math.random() * 8;
+      p.style.width = size + 'px';
+      p.style.height = size * 0.8 + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      const dur = 12 + Math.random() * 14;
+      p.style.animationDuration = dur + 's, ' + (dur / 3) + 's';
+      p.style.animationDelay = (-Math.random() * dur) + 's, 0s';
+      petalLayer.appendChild(p);
+    }
+
+    // Parallax on hero photo
+    const heroPhoto = document.querySelector('.hero-photo');
+    document.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroPhoto.style.transform = 'translateY(' + (y * 0.25) + 'px)';
+      }
+    }, { passive: true });
+
+    // Tilt effect on gallery photos (desktop only)
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.querySelectorAll('.gallery-item .ph').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateZ(0)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'rotateY(0) rotateX(0)';
+        });
+      });
+
+      // Magnetic buttons on finale
+      document.querySelectorAll('.finale button').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const r = btn.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          btn.style.transform = `translate(${x * 0.25}px, ${y * 0.4}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0, 0)';
+        });
+      });
+    }
+
+    // Hero animated title
+    const title = "Happy Birthday";
+    const heroTitle = document.getElementById('hero-title');
+    title.split('').forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.textContent = ch === ' ' ? '\u00A0' : ch;
+      span.style.animationDelay = (0.4 + i * 0.045) + 's';
+      heroTitle.appendChild(span);
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+
+    // Envelope open
+    function openLetter() {
+      document.getElementById('envelope').classList.add('open');
+    }
+
+    // Finale interaction
+    function react(choice) {
+      const box = document.getElementById('reaction');
+      if (choice === 'no') {
+        box.innerHTML = 'Good, kyunki ye sab tumhare liye real hai <span class="heart-burst">❤️</span>';
+      } else {
+        box.innerHTML = 'Haaw Ashuu 🙄 chalo phir se dekho...';
+        setTimeout(() => {
+          document.getElementById('closing').scrollIntoView({ behavior: 'smooth' });
+        }, 1200);
+      }
+      box.classList.remove('show');
+      void box.offsetWidth;
+      box.classList.add('show');
+    }
+
+    // Confetti burst on closing section reaching view
+    const closingSection = document.querySelector('.closing');
+    let confettiFired = false;
+    const confettiColors = ['#d98a9b', '#c9a15c', '#f0c4cd', '#6e2b3a'];
+    const confettiObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !confettiFired) {
+          confettiFired = true;
+          for (let i = 0; i < 40; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.width = (4 + Math.random() * 5) + 'px';
+            piece.style.height = (8 + Math.random() * 8) + 'px';
+            piece.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            piece.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+            piece.style.animationDelay = (Math.random() * 0.6) + 's';
+            closingSection.appendChild(piece);
+            setTimeout(() => piece.remove(), 6000);
+          }
+        }
+      });
+    }, { threshold: 0.4 });
+    confettiObserver.observe(closingSection);
+  </script>
+</body>
+</html>
